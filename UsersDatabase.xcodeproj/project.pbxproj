@@ -35,6 +35,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DBC792BD29C8608A00C3FFFE /* UserScene */ = {
+			isa = PBXGroup;
+			children = (
+				DBC792BE29C860A100C3FFFE /* View */,
+			);
+			path = UserScene;
+			sourceTree = "<group>";
+		};
+		DBC792BE29C860A100C3FFFE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DBE1538E29C7768C005CE200 /* ViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		DBE1537E29C7768C005CE200 = {
 			isa = PBXGroup;
 			children = (
@@ -63,8 +79,8 @@
 		DBE1539E29C777B2005CE200 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				DBC792BD29C8608A00C3FFFE /* UserScene */,
 				DBE1539F29C777BF005CE200 /* App */,
-				DBE1538E29C7768C005CE200 /* ViewController.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";

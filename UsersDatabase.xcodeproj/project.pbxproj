@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		DB9C655D29C8D09300845814 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C655C29C8D09300845814 /* Builder.swift */; };
 		DBC792C129C8840200C3FFFE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC792C029C8840200C3FFFE /* UserModel.swift */; };
-		DBC792E729C88BD400C3FFFE /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DBC792E529C88BD400C3FFFE /* Model.xcdatamodeld */; };
+		DBC792E729C88BD400C3FFFE /* UsersDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DBC792E529C88BD400C3FFFE /* UsersDatabase.xcdatamodeld */; };
 		DBC792EC29C892E000C3FFFE /* UserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC792EB29C892E000C3FFFE /* UserPresenter.swift */; };
 		DBE1538B29C7768C005CE200 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1538A29C7768C005CE200 /* AppDelegate.swift */; };
 		DBE1538D29C7768C005CE200 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1538C29C7768C005CE200 /* SceneDelegate.swift */; };
@@ -125,7 +125,7 @@
 			children = (
 				DBE1538A29C7768C005CE200 /* AppDelegate.swift */,
 				DBE1538C29C7768C005CE200 /* SceneDelegate.swift */,
-				DBC792E529C88BD400C3FFFE /* Model.xcdatamodeld */,
+				DBC792E529C88BD400C3FFFE /* UsersDatabase.xcdatamodeld */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -213,7 +213,7 @@
 				DBE1538F29C7768C005CE200 /* UserView.swift in Sources */,
 				DBE1538B29C7768C005CE200 /* AppDelegate.swift in Sources */,
 				DB9C655D29C8D09300845814 /* Builder.swift in Sources */,
-				DBC792E729C88BD400C3FFFE /* Model.xcdatamodeld in Sources */,
+				DBC792E729C88BD400C3FFFE /* UsersDatabase.xcdatamodeld in Sources */,
 				DBC792EC29C892E000C3FFFE /* UserPresenter.swift in Sources */,
 				DBE1538D29C7768C005CE200 /* SceneDelegate.swift in Sources */,
 				DBC792C129C8840200C3FFFE /* UserModel.swift in Sources */,
@@ -424,13 +424,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		DBC792E529C88BD400C3FFFE /* Model.xcdatamodeld */ = {
+		DBC792E529C88BD400C3FFFE /* UsersDatabase.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				DBC792E629C88BD400C3FFFE /* Model.xcdatamodel */,
 			);
 			currentVersion = DBC792E629C88BD400C3FFFE /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
+			path = UsersDatabase.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

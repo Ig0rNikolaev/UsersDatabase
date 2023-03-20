@@ -5,10 +5,9 @@
 //  Created by Игорь Николаев on 20.03.2023.
 //
 
-import Foundation
-
 protocol UserViewProtocol {
-    func addUserName()
+    func save(userInfo: String)
+    func get()
 }
 
 protocol UserPresenterProtocol {

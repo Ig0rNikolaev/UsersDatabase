@@ -9,6 +9,10 @@ import UIKit
 
 class UserView: UIViewController {
 
+    //MARK: - Outlets
+
+    var presenter: UserPresenterProtocol?
+
     //: MARK: - UI Elements
 
     private lazy var userNameText: UITextField = {
@@ -36,7 +40,6 @@ class UserView: UIViewController {
     private lazy var userTable: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.dataSource = self
-        tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -53,7 +56,9 @@ class UserView: UIViewController {
 
     //: MARK: - Setups
 
-    @objc func addUser() {}
+    @objc func addUser() {
+        addUserName()
+    }
 
     private func setupView() {
         title = "USERS"
@@ -88,17 +93,21 @@ class UserView: UIViewController {
 
 extension UserView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        presenter?.model.userNames.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "User name"
+        cell.textLabel?.text = presenter?.model.userNames[indexPath.row]
         cell.accessoryType = .disclosureIndicator
         return cell
     }
 }
 
-extension UserView: UITableViewDelegate {
-
+extension UserView: UserViewProtocol{
+    func addUserName() {
+        let userName = userNameText.text ?? " "
+        presenter?.model.userNames.append(userName)
+        userTable.reloadData()
+    }
 }

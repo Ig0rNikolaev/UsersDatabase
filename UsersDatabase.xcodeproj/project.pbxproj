@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB401AE429CB810100C4F3E0 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB401AE329CB810100C4F3E0 /* DetailView.swift */; };
+		DB401AE829CB8BC300C4F3E0 /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB401AE729CB8BC300C4F3E0 /* DetailPresenter.swift */; };
+		DB401AEA29CB8DC500C4F3E0 /* BuilderDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB401AE929CB8DC500C4F3E0 /* BuilderDetail.swift */; };
 		DB572E6729CB514400C2AF71 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB572E6529CB514400C2AF71 /* User+CoreDataClass.swift */; };
 		DB572E6829CB514400C2AF71 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB572E6629CB514400C2AF71 /* User+CoreDataProperties.swift */; };
 		DB572E6C29CB51CE00C2AF71 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB572E6B29CB51CE00C2AF71 /* CoreDataManager.swift */; };
-		DB9C655D29C8D09300845814 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C655C29C8D09300845814 /* Builder.swift */; };
+		DB9C655D29C8D09300845814 /* BuilderUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9C655C29C8D09300845814 /* BuilderUser.swift */; };
 		DBC792E729C88BD400C3FFFE /* UsersDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DBC792E529C88BD400C3FFFE /* UsersDatabase.xcdatamodeld */; };
 		DBC792EC29C892E000C3FFFE /* UserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC792EB29C892E000C3FFFE /* UserPresenter.swift */; };
 		DBE1538B29C7768C005CE200 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1538A29C7768C005CE200 /* AppDelegate.swift */; };
@@ -21,10 +24,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB401AE329CB810100C4F3E0 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		DB401AE729CB8BC300C4F3E0 /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
+		DB401AE929CB8DC500C4F3E0 /* BuilderDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuilderDetail.swift; sourceTree = "<group>"; };
 		DB572E6529CB514400C2AF71 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DB572E6629CB514400C2AF71 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		DB572E6B29CB51CE00C2AF71 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		DB9C655C29C8D09300845814 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
+		DB9C655C29C8D09300845814 /* BuilderUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuilderUser.swift; sourceTree = "<group>"; };
 		DBC792E629C88BD400C3FFFE /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		DBC792EB29C892E000C3FFFE /* UserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresenter.swift; sourceTree = "<group>"; };
 		DBE1538729C7768C005CE200 /* UsersDatabase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UsersDatabase.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,13 +53,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB401AE229CB80E400C4F3E0 /* DetailScene */ = {
+			isa = PBXGroup;
+			children = (
+				DB401AE529CB8BA700C4F3E0 /* View */,
+				DB401AE629CB8BB300C4F3E0 /* Presenter */,
+			);
+			path = DetailScene;
+			sourceTree = "<group>";
+		};
+		DB401AE529CB8BA700C4F3E0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DB401AE329CB810100C4F3E0 /* DetailView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DB401AE629CB8BB300C4F3E0 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				DB401AE729CB8BC300C4F3E0 /* DetailPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		DB572E6929CB514F00C2AF71 /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
 				DB572E6A29CB516800C2AF71 /* Entitys */,
 				DB572E6B29CB51CE00C2AF71 /* CoreDataManager.swift */,
 			);
-			path = DataManager;
+			name = DataManager;
+			path = UserScene/DataManager;
 			sourceTree = "<group>";
 		};
 		DB572E6A29CB516800C2AF71 /* Entitys */ = {
@@ -68,7 +100,8 @@
 		DB9C655E29C8D5C200845814 /* Builders */ = {
 			isa = PBXGroup;
 			children = (
-				DB9C655C29C8D09300845814 /* Builder.swift */,
+				DB9C655C29C8D09300845814 /* BuilderUser.swift */,
+				DB401AE929CB8DC500C4F3E0 /* BuilderDetail.swift */,
 			);
 			path = Builders;
 			sourceTree = "<group>";
@@ -76,7 +109,6 @@
 		DBC792BD29C8608A00C3FFFE /* UserScene */ = {
 			isa = PBXGroup;
 			children = (
-				DB572E6929CB514F00C2AF71 /* DataManager */,
 				DBC792BE29C860A100C3FFFE /* View */,
 				DBC792E829C8922900C3FFFE /* Presenter */,
 			);
@@ -127,7 +159,9 @@
 		DBE1539E29C777B2005CE200 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				DB401AE229CB80E400C4F3E0 /* DetailScene */,
 				DBC792BD29C8608A00C3FFFE /* UserScene */,
+				DB572E6929CB514F00C2AF71 /* DataManager */,
 				DB9C655E29C8D5C200845814 /* Builders */,
 				DBE1539F29C777BF005CE200 /* App */,
 			);
@@ -227,11 +261,14 @@
 				DBE1538F29C7768C005CE200 /* UserView.swift in Sources */,
 				DBE1538B29C7768C005CE200 /* AppDelegate.swift in Sources */,
 				DB572E6829CB514400C2AF71 /* User+CoreDataProperties.swift in Sources */,
-				DB9C655D29C8D09300845814 /* Builder.swift in Sources */,
+				DB401AE429CB810100C4F3E0 /* DetailView.swift in Sources */,
+				DB401AEA29CB8DC500C4F3E0 /* BuilderDetail.swift in Sources */,
+				DB9C655D29C8D09300845814 /* BuilderUser.swift in Sources */,
 				DBC792E729C88BD400C3FFFE /* UsersDatabase.xcdatamodeld in Sources */,
 				DBC792EC29C892E000C3FFFE /* UserPresenter.swift in Sources */,
 				DB572E6C29CB51CE00C2AF71 /* CoreDataManager.swift in Sources */,
 				DBE1538D29C7768C005CE200 /* SceneDelegate.swift in Sources */,
+				DB401AE829CB8BC300C4F3E0 /* DetailPresenter.swift in Sources */,
 				DB572E6729CB514400C2AF71 /* User+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

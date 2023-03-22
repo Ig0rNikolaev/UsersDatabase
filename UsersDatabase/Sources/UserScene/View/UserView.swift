@@ -19,7 +19,7 @@ final class UserView: UIViewController {
     private lazy var userNameText: UITextField = {
         let textField = UITextField()
         textField.layer.cornerRadius = 10
-        textField.backgroundColor = .systemGray5
+        textField.backgroundColor = .white
         textField.textAlignment = .center
         textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder ?? "Print your name")
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +41,8 @@ final class UserView: UIViewController {
     private lazy var userTable: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.dataSource = self
-        tableView.backgroundColor = .systemGray5
+        tableView.delegate = self
+        tableView.backgroundColor = .systemGray6
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -63,13 +64,13 @@ final class UserView: UIViewController {
     @objc func addUser() {
         if addAlert() {
             userNameText.text = nil
-            presenter?.coreData?.saveContext()
+            CoreDataManager.shared.saveContext()
         }
     }
 
     private func setupView() {
         title = "USERS"
-        view.backgroundColor = .white
+        view.backgroundColor = .systemGray6
         navigationController?.navigationBar.prefersLargeTitles = true
     }
 
@@ -128,6 +129,17 @@ extension UserView: UserViewProtocol {
         } catch {
             print(error)
         }
+    }
+}
+
+extension UserView: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let view = BuilderDetail.build()
+        if let sheet = view.sheetPresentationController {
+            sheet.detents = [.large()]
+        }
+        present(view, animated: true)
     }
 }
 

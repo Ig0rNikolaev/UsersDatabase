@@ -8,16 +8,7 @@
 import Foundation
 import CoreData
 
-protocol CoreDataManagerProtocol {
-    var managedContext: NSManagedObjectContext { get set }
-    var persistentContainer: NSPersistentContainer { get set }
-    
-    func entityForName(userName: String) -> NSEntityDescription
-    func fetchedResultController(entity: String, sortName: String) -> NSFetchedResultsController<NSFetchRequestResult>
-    func saveContext()
-}
-
-final class CoreDataManager: CoreDataManagerProtocol {
+ final class CoreDataManager {
 
     //MARK: - Outlets
 

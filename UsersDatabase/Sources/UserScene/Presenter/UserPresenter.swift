@@ -16,7 +16,6 @@ protocol UserViewProtocol {
 protocol UserPresenterProtocol {
     var user: User? { get set }
     var view: UserViewProtocol { get set }
-    var coreData: CoreDataManager? { get set }
     var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult> { get set }
     init(view: UserViewProtocol)
 }
@@ -24,7 +23,6 @@ protocol UserPresenterProtocol {
 final class UserPresenter: UserPresenterProtocol {
     var user: User?
     var view: UserViewProtocol
-    var coreData: CoreDataManager?
     var fetchedResultController = CoreDataManager.shared.fetchedResultController(entity: "User", sortName: "name")
 
     required init(view: UserViewProtocol) {

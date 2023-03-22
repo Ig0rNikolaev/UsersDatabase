@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BuilderCharacter {
+final class BuilderUser {
     static func build() -> UIViewController {
         let view = UserView()
         let presenter = UserPresenter(view: view)

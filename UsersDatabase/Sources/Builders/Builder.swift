@@ -10,8 +10,7 @@ import UIKit
 final class BuilderCharacter {
     static func build() -> UIViewController {
         let view = UserView()
-        let model = UserModel()
-        let presenter = UserPresenter(view: view, model: model)
+        let presenter = UserPresenter(view: view)
         view.presenter = presenter
         return view
     }

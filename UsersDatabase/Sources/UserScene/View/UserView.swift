@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class UserView: UIViewController {
+final class UserView: UIViewController {
 
     //MARK: - Outlets
 
@@ -54,20 +54,23 @@ class UserView: UIViewController {
         setupView()
         setupHierarchy()
         setupLayout()
-        get()
+        addController()
+        addFetchedDelegate()
     }
 
     //: MARK: - Setups
 
     @objc func addUser() {
-        let userName = userNameText.text ?? " "
-        save(userInfo: userName)
-        userTable.reloadData()
+        if addAlert() {
+            userNameText.text = nil
+            presenter?.coreData?.saveContext()
+        }
     }
 
     private func setupView() {
         title = "USERS"
         view.backgroundColor = .white
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
 
     private func setupHierarchy() {
@@ -78,7 +81,7 @@ class UserView: UIViewController {
 
     private func setupLayout() {
         NSLayoutConstraint.activate([
-            userNameText.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            userNameText.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
             userNameText.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
             userNameText.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
             userNameText.bottomAnchor.constraint(equalTo: userNameText.topAnchor, constant: 45),
@@ -96,44 +99,104 @@ class UserView: UIViewController {
     }
 }
 
+extension UserView: UserViewProtocol {
+    func addFetchedDelegate() {
+        presenter?.fetchedResultController.delegate = self
+    }
+
+    func addAlert() -> Bool {
+        if userNameText.text!.isEmpty {
+            let alert = UIAlertController(title: "Ошибка ввода", message: "Поле не заполнено", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+            present(alert, animated: true)
+            return false
+        } else {
+            presenter?.user = User()
+        }
+        if presenter?.user == nil {
+            presenter?.user = User(context: CoreDataManager.shared.managedContext)
+        }
+        if let user = presenter?.user {
+            user.name = userNameText.text
+        }
+        return true
+    }
+
+    func addController() {
+        do {
+            try presenter?.fetchedResultController.performFetch()
+        } catch {
+            print(error)
+        }
+    }
+}
+
 extension UserView: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            guard let user = presenter?.fetchedResultController.object(at: indexPath) as? User else { return }
+            CoreDataManager.shared.managedContext.delete(user)
+            CoreDataManager.shared.saveContext()
+        }
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        presenter?.fetchedResultController.sections?.count ?? 0
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.model.userNames.count ?? 0
+        if let sections = presenter?.fetchedResultController.sections {
+            return sections[section].numberOfObjects
+        } else {
+            return 0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let user = presenter?.fetchedResultController.object(at: indexPath) as? User
+        cell = UITableViewCell(style: .value1, reuseIdentifier: "value1")
         cell.accessoryType = .disclosureIndicator
-        cell.textLabel?.text = presenter?.model.userNames[indexPath.row].value(forKey: "name") as? String
+        cell.textLabel?.text = user?.name
         return cell
     }
 }
 
-extension UserView: UserViewProtocol {
-    func save(userInfo: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        guard let entity = NSEntityDescription.entity(forEntityName: "User", in: managedContext) else { return }
-        let user = NSManagedObject(entity: entity, insertInto: managedContext)
-        user.setValue(userInfo, forKeyPath: "name")
-        do {
-            try managedContext.save()
-            presenter?.model.userNames.append(user)
-        } catch {
-            let erorr = error as NSError
-            fatalError("Unresolved error \(erorr), \(erorr.userInfo)")
+extension UserView: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        userTable.beginUpdates()
+    }
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            if let indexPath = newIndexPath {
+                userTable.insertRows(at: [indexPath], with: .automatic)
+            }
+        case .update:
+            if let indexPath = indexPath {
+                let user = presenter?.fetchedResultController.object(at: indexPath) as? User
+                let cell = userTable.cellForRow(at: indexPath)
+                cell?.textLabel?.text = user?.name
+            }
+        case .move:
+            if let indexPath = indexPath {
+                userTable.deleteRows(at: [indexPath], with: .automatic)
+            }
+            if let indexPath = newIndexPath {
+                userTable.insertRows(at: [indexPath], with: .automatic)
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                userTable.deleteRows(at: [indexPath], with: .automatic)
+            }
+        default:
+            break
         }
     }
 
-    func get() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchReqest = NSFetchRequest<NSManagedObject>(entityName: "User")
-        do {
-            try presenter?.model.userNames = managedContext.fetch(fetchReqest)
-        } catch {
-            let erorr = error as NSError
-            fatalError("Unresolved error \(erorr), \(erorr.userInfo)")
-        }
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        userTable.endUpdates()
     }
 }

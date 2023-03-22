@@ -5,23 +5,29 @@
 //  Created by Игорь Николаев on 20.03.2023.
 //
 
+import CoreData
+
 protocol UserViewProtocol {
-    func save(userInfo: String)
-    func get()
+    func addAlert() -> Bool
+    func addController()
+    func addFetchedDelegate()
 }
 
 protocol UserPresenterProtocol {
+    var user: User? { get set }
     var view: UserViewProtocol { get set }
-    var model: ModelProtocol { get set }
-    init(view: UserViewProtocol, model: ModelProtocol)
+    var coreData: CoreDataManager? { get set }
+    var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult> { get set }
+    init(view: UserViewProtocol)
 }
 
-class UserPresenter: UserPresenterProtocol {
+final class UserPresenter: UserPresenterProtocol {
+    var user: User?
     var view: UserViewProtocol
-    var model: ModelProtocol
+    var coreData: CoreDataManager?
+    var fetchedResultController = CoreDataManager.shared.fetchedResultController(entity: "User", sortName: "name")
 
-    required init(view: UserViewProtocol, model: ModelProtocol) {
+    required init(view: UserViewProtocol) {
         self.view = view
-        self.model = model
     }
 }

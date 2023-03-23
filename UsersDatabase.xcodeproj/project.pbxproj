@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB2291A829CC53A9008F6954 /* NameUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2291A729CC53A9008F6954 /* NameUserCell.swift */; };
+		DB2291AA29CC53B2008F6954 /* AgeUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2291A929CC53B2008F6954 /* AgeUserCell.swift */; };
+		DB2291AC29CC53B9008F6954 /* GenderUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2291AB29CC53B9008F6954 /* GenderUserCell.swift */; };
 		DB401AE429CB810100C4F3E0 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB401AE329CB810100C4F3E0 /* DetailView.swift */; };
 		DB401AE829CB8BC300C4F3E0 /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB401AE729CB8BC300C4F3E0 /* DetailPresenter.swift */; };
 		DB401AEA29CB8DC500C4F3E0 /* BuilderDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB401AE929CB8DC500C4F3E0 /* BuilderDetail.swift */; };
@@ -24,6 +27,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB2291A729CC53A9008F6954 /* NameUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameUserCell.swift; sourceTree = "<group>"; };
+		DB2291A929CC53B2008F6954 /* AgeUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeUserCell.swift; sourceTree = "<group>"; };
+		DB2291AB29CC53B9008F6954 /* GenderUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderUserCell.swift; sourceTree = "<group>"; };
 		DB401AE329CB810100C4F3E0 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		DB401AE729CB8BC300C4F3E0 /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
 		DB401AE929CB8DC500C4F3E0 /* BuilderDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuilderDetail.swift; sourceTree = "<group>"; };
@@ -53,6 +59,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB2291A629CC5395008F6954 /* DetailCells */ = {
+			isa = PBXGroup;
+			children = (
+				DB2291A729CC53A9008F6954 /* NameUserCell.swift */,
+				DB2291A929CC53B2008F6954 /* AgeUserCell.swift */,
+				DB2291AB29CC53B9008F6954 /* GenderUserCell.swift */,
+			);
+			path = DetailCells;
+			sourceTree = "<group>";
+		};
 		DB401AE229CB80E400C4F3E0 /* DetailScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -65,6 +81,7 @@
 		DB401AE529CB8BA700C4F3E0 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DB2291A629CC5395008F6954 /* DetailCells */,
 				DB401AE329CB810100C4F3E0 /* DetailView.swift */,
 			);
 			path = View;
@@ -263,11 +280,14 @@
 				DB572E6829CB514400C2AF71 /* User+CoreDataProperties.swift in Sources */,
 				DB401AE429CB810100C4F3E0 /* DetailView.swift in Sources */,
 				DB401AEA29CB8DC500C4F3E0 /* BuilderDetail.swift in Sources */,
+				DB2291A829CC53A9008F6954 /* NameUserCell.swift in Sources */,
 				DB9C655D29C8D09300845814 /* BuilderUser.swift in Sources */,
 				DBC792E729C88BD400C3FFFE /* UsersDatabase.xcdatamodeld in Sources */,
 				DBC792EC29C892E000C3FFFE /* UserPresenter.swift in Sources */,
 				DB572E6C29CB51CE00C2AF71 /* CoreDataManager.swift in Sources */,
+				DB2291AA29CC53B2008F6954 /* AgeUserCell.swift in Sources */,
 				DBE1538D29C7768C005CE200 /* SceneDelegate.swift in Sources */,
+				DB2291AC29CC53B9008F6954 /* GenderUserCell.swift in Sources */,
 				DB401AE829CB8BC300C4F3E0 /* DetailPresenter.swift in Sources */,
 				DB572E6729CB514400C2AF71 /* User+CoreDataClass.swift in Sources */,
 			);

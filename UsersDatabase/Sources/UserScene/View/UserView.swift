@@ -13,7 +13,7 @@ final class UserView: UIViewController {
     //MARK: - Outlets
 
     var presenter: UserPresenterProtocol?
-
+    
     //: MARK: - UI Elements
 
     private lazy var userNameText: UITextField = {
@@ -119,6 +119,7 @@ extension UserView: UserViewProtocol {
         }
         if let user = presenter?.user {
             user.name = userNameText.text
+            CoreDataManager.shared.saveContext()
         }
         return true
     }
@@ -133,13 +134,14 @@ extension UserView: UserViewProtocol {
 }
 
 extension UserView: UITableViewDelegate {
-
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let view = BuilderDetail.build()
+        guard let user = presenter?.fetchedResultController.object(at: indexPath) as? User else { return }
+        let view = BuilderDetail.build(user: user)
         if let sheet = view.sheetPresentationController {
             sheet.detents = [.large()]
         }
         present(view, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

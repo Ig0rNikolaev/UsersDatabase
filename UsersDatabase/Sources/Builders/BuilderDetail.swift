@@ -8,9 +8,9 @@
 import UIKit
 
 final class BuilderDetail {
-    static func build() -> UIViewController {
+    static func build(user: User?) -> UIViewController {
         let view = DetailView()
-        let presenter = DetailPresenter(view: view)
+        let presenter = DetailPresenter(view: view, user: user)
         view.presenter = presenter
         return view
     }

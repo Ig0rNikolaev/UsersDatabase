@@ -32,14 +32,14 @@ class NameUserCell: UITableViewCell {
         return conteiner
     }()
     
-    private var labelName: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.tintColor = .black
-        label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
-        label.clipsToBounds = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    private var labelName: UITextField = {
+        let text = UITextField()
+        text.textAlignment = .left
+        text.tintColor = .black
+        text.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        text.clipsToBounds = true
+        text.translatesAutoresizingMaskIntoConstraints = false
+        return text
     }()
 
     //MARK: - Lifecycle
@@ -80,7 +80,7 @@ class NameUserCell: UITableViewCell {
             iconName.bottomAnchor.constraint(equalTo: iconConteiner.bottomAnchor),
             
             labelName.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            labelName.leftAnchor.constraint(equalTo: iconConteiner.leftAnchor, constant: 50),
+            labelName.leftAnchor.constraint(equalTo: iconConteiner.rightAnchor, constant: 10),
         ])
     }
 

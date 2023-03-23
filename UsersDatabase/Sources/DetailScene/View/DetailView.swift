@@ -64,6 +64,17 @@ final class DetailView: UIViewController {
         return picker
     }()
 
+    private lazy var editSaveButton: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 5
+        button.backgroundColor = .systemGray6
+        button.setTitle("Edit", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 21, weight: .medium)
+        button.setTitleColor(UIColor.systemBlue, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -89,6 +100,7 @@ final class DetailView: UIViewController {
         view.addSubview(imageUserСonteiner)
         view.addSubview(userTabelDetail)
         view.addSubview(addPhotoButton)
+        view.addSubview(editSaveButton)
     }
     
     private func setupLayout() {
@@ -112,6 +124,11 @@ final class DetailView: UIViewController {
             addPhotoButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -110),
             addPhotoButton.widthAnchor.constraint(equalToConstant: 50),
             addPhotoButton.heightAnchor.constraint(equalToConstant: 50),
+
+            editSaveButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            editSaveButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
+            editSaveButton.widthAnchor.constraint(equalToConstant: 70),
+            editSaveButton.heightAnchor.constraint(equalToConstant: 35),
         ])
     }
 }

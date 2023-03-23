@@ -40,12 +40,28 @@ class GenderUserCell: UITableViewCell {
         return picker
     }()
 
+    private var labelGender: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.text = "None"
+        label.tintColor = .black
+        label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        label.clipsToBounds = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     //MARK: - Lifecycle
 
     override init(style: GenderUserCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupHierarchy()
         setupLayout()
+    }
+
+    @objc private func genderChanged(_ sender: UIPickerView) {
+        let selectedGender = pickerView(userGender, titleForRow: userGender.selectedRow(inComponent: 0), forComponent: 0) ?? "None"
+        labelGender.text = selectedGender
     }
 
     required init?(coder: NSCoder) {
@@ -63,6 +79,7 @@ class GenderUserCell: UITableViewCell {
         iconConteiner.addSubview(iconGender)
         contentView.addSubview(iconConteiner)
         contentView.addSubview(userGender)
+        contentView.addSubview(labelGender)
     }
 
     func setupLayout() {
@@ -78,9 +95,11 @@ class GenderUserCell: UITableViewCell {
             iconGender.bottomAnchor.constraint(equalTo: iconConteiner.bottomAnchor),
 
             userGender.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            userGender.leftAnchor.constraint(equalTo: iconConteiner.leftAnchor, constant: 42),
-            userGender.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -150),
-            userGender.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -50),
+            userGender.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            userGender.widthAnchor.constraint(equalToConstant: 175),
+
+            labelGender.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            labelGender.leftAnchor.constraint(equalTo: iconConteiner.rightAnchor, constant: 10),
         ])
     }
 }
@@ -96,6 +115,11 @@ extension GenderUserCell: UIPickerViewDataSource {
 }
 
 extension GenderUserCell: UIPickerViewDelegate {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let selectedGender = pickerView.delegate?.pickerView?(pickerView, titleForRow: row, forComponent: component) ?? "None"
+        labelGender.text = selectedGender
+    }
+
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch row {
         case 0:

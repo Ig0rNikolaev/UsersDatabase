@@ -36,6 +36,7 @@ class NameUserCell: UITableViewCell {
         let text = UITextField()
         text.textAlignment = .left
         text.tintColor = .black
+        text.isUserInteractionEnabled = false
         text.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         text.clipsToBounds = true
         text.translatesAutoresizingMaskIntoConstraints = false
@@ -86,5 +87,9 @@ class NameUserCell: UITableViewCell {
 
     public func configurationUser(user: User?) {
         labelName.text = user?.name
+    }
+
+    public func editeName(newName: String, user: User?) {
+        user?.name = newName
     }
 }

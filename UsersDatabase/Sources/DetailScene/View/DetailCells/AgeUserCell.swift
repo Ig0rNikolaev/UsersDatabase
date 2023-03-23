@@ -35,6 +35,7 @@ class AgeUserCell: UITableViewCell {
     private lazy var userDate: UIDatePicker = {
         let picker = UIDatePicker()
         picker.datePickerMode = .date
+        picker.isUserInteractionEnabled = false
         picker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
@@ -43,7 +44,6 @@ class AgeUserCell: UITableViewCell {
     private var labelData: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.text = "dd:mm:yy"
         label.tintColor = .black
         label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         label.clipsToBounds = true
@@ -97,5 +97,9 @@ class AgeUserCell: UITableViewCell {
             labelData.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             labelData.leftAnchor.constraint(equalTo: iconConteiner.rightAnchor, constant: 10),
         ])
+    }
+
+    public func configurationUserAge(user: User?) {
+        labelData.text = user?.data
     }
 }

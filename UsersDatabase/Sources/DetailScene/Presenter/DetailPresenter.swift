@@ -6,20 +6,25 @@
 //
 
 import Foundation
+import CoreData
 
 protocol DetailViewProtocol {
     func setupView()
+    func imagePickerDelegate()
 }
 
 protocol DetailPresenterProtocol {
     var view: DetailViewProtocol? { get set }
-    init(view: DetailViewProtocol?)
+    var user: User? { get set }
+
+    init(view: DetailViewProtocol?, user: User?)
 }
 
 final class DetailPresenter: DetailPresenterProtocol {
     var view: DetailViewProtocol?
-
-    required init(view: DetailViewProtocol?) {
+    var user: User?
+    required init(view: DetailViewProtocol?, user: User?) {
         self.view = view
+        self.user = user
     }
 }

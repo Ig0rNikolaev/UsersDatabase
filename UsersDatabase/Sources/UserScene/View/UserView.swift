@@ -118,6 +118,8 @@ extension UserView: UserViewProtocol {
         }
         if let user = presenter?.user {
             user.name = userNameText.text
+            user.data = "dd:mm:yy"
+            user.gender = "None"
             CoreDataManager.shared.saveContext()
         }
         return true

@@ -36,6 +36,7 @@ class GenderUserCell: UITableViewCell {
         let picker = UIPickerView()
         picker.delegate = self
         picker.dataSource = self
+        picker.isUserInteractionEnabled = false
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
     }()
@@ -43,7 +44,6 @@ class GenderUserCell: UITableViewCell {
     private var labelGender: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.text = "None"
         label.tintColor = .black
         label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         label.clipsToBounds = true
@@ -101,6 +101,10 @@ class GenderUserCell: UITableViewCell {
             labelGender.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             labelGender.leftAnchor.constraint(equalTo: iconConteiner.rightAnchor, constant: 10),
         ])
+    }
+
+    public func configurationUserGender(user: User?) {
+        labelGender.text = user?.gender
     }
 }
 

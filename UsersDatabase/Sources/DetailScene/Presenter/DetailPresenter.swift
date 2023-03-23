@@ -16,7 +16,6 @@ protocol DetailViewProtocol {
 protocol DetailPresenterProtocol {
     var view: DetailViewProtocol? { get set }
     var user: User? { get set }
-
     init(view: DetailViewProtocol?, user: User?)
 }
 

@@ -22,7 +22,6 @@ final class DetailView: UIViewController {
         tableView.register(AgeUserCell.self, forCellReuseIdentifier: AgeUserCell.identifier)
         tableView.register(GenderUserCell.self, forCellReuseIdentifier: GenderUserCell.identifier)
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "defaultCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -71,6 +70,7 @@ final class DetailView: UIViewController {
         button.setTitle("Edit", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 21, weight: .medium)
         button.setTitleColor(UIColor.systemBlue, for: .normal)
+        button.addTarget(self, action: #selector(edit), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -86,7 +86,13 @@ final class DetailView: UIViewController {
     }
     
     // MARK: - Setups
+
+    @objc func edit() {
     
+        editSaveButton.setTitle("Save", for: .normal)
+       
+    }
+
     @objc func addPhoto() {
         present(imagePicker, animated: true)
     }
@@ -154,15 +160,15 @@ extension DetailView: UITableViewDataSource {
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: AgeUserCell.identifier,
                                                            for: indexPath) as? AgeUserCell else { return UITableViewCell() }
+            cell.configurationUserAge(user: presenter?.user)
             return cell
         case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GenderUserCell.identifier,
                                                            for: indexPath) as? GenderUserCell else { return UITableViewCell() }
+            cell.configurationUserGender(user: presenter?.user)
             return cell
         default:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: NameUserCell.identifier,
-                                                           for: indexPath) as? NameUserCell else { return UITableViewCell() }
-            return cell
+            return UITableViewCell()
         }
     }
 }

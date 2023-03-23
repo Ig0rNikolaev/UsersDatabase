@@ -35,11 +35,29 @@ class AgeUserCell: UITableViewCell {
     private lazy var userDate: UIDatePicker = {
         let picker = UIDatePicker()
         picker.datePickerMode = .date
+        picker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
     }()
 
+    private var labelData: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.text = "dd:mm:yy"
+        label.tintColor = .black
+        label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        label.clipsToBounds = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     //MARK: - Lifecycle
+
+    @objc private func dateChanged(_ sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        labelData.text = dateFormatter.string(from: sender.date)
+    }
 
     override init(style: AgeUserCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -57,6 +75,7 @@ class AgeUserCell: UITableViewCell {
         iconConteiner.addSubview(iconAge)
         contentView.addSubview(iconConteiner)
         contentView.addSubview(userDate)
+        contentView.addSubview(labelData)
     }
 
     func setupLayout() {
@@ -72,7 +91,11 @@ class AgeUserCell: UITableViewCell {
             iconAge.bottomAnchor.constraint(equalTo: iconConteiner.bottomAnchor),
 
             userDate.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            userDate.leftAnchor.constraint(equalTo: iconConteiner.leftAnchor, constant: 50),
+            userDate.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
+            userDate.widthAnchor.constraint(equalToConstant: 160),
+
+            labelData.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            labelData.leftAnchor.constraint(equalTo: iconConteiner.rightAnchor, constant: 10),
         ])
     }
 }

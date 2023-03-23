@@ -32,7 +32,6 @@ final class UserView: UIViewController {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         button.layer.cornerRadius = 10
         button.backgroundColor = .systemBlue
-        button.tintColor = .white
         button.addTarget(self, action: #selector(addUser), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button

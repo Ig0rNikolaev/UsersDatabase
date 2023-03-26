@@ -10,7 +10,7 @@ import UIKit
 final class DetailView: UIViewController {
     
     var presenter: DetailPresenterProtocol?
-    
+
     // MARK: - UI Elements
     
     private lazy var userTabelDetail: UITableView = {
@@ -70,7 +70,7 @@ final class DetailView: UIViewController {
         button.setTitle("Edit", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 21, weight: .medium)
         button.setTitleColor(UIColor.systemBlue, for: .normal)
-        button.addTarget(self, action: #selector(edit), for: .touchUpInside)
+        button.addTarget(self, action: #selector(editSave), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -87,16 +87,66 @@ final class DetailView: UIViewController {
     
     // MARK: - Setups
 
-    @objc func edit() {
-    
-        editSaveButton.setTitle("Save", for: .normal)
-       
+    var isSaveEdit = false {
+        didSet {
+            if isSaveEdit {
+                self.edit()
+            } else {
+                    self.save()
+                }
+            }
+        }
+
+    @objc func editSave() {
+        isSaveEdit.toggle()
     }
 
     @objc func addPhoto() {
         present(imagePicker, animated: true)
     }
-    
+
+    func edit() {
+        editSaveButton.setTitle("Save", for: .normal)
+
+        for indexPath in userTabelDetail.indexPathsForVisibleRows ?? [] {
+            if let name = userTabelDetail.cellForRow(at: indexPath) as? NameUserCell {
+                name.labelName.isUserInteractionEnabled = true
+            }
+            if let data = userTabelDetail.cellForRow(at: indexPath) as? AgeUserCell {
+                data.userDate.isUserInteractionEnabled = true
+                data.userDate.isHidden = false
+            }
+            if let gender = userTabelDetail.cellForRow(at: indexPath) as? GenderUserCell {
+                gender.userGender.isUserInteractionEnabled = true
+                gender.userGender.isHidden = false
+
+            }
+        }
+        CoreDataManager.shared.saveContext()
+    }
+
+    func save() {
+        let user = presenter?.user
+        editSaveButton.setTitle("Edit", for: .normal)
+
+        for indexPath in userTabelDetail.indexPathsForVisibleRows ?? [] {
+            if let name = userTabelDetail.cellForRow(at: indexPath) as? NameUserCell {
+                user?.name = name.labelName.text
+                name.labelName.isUserInteractionEnabled = false
+            }
+            if let data = userTabelDetail.cellForRow(at: indexPath) as? AgeUserCell {
+                user?.data = data.labelData.text
+                data.userDate.isUserInteractionEnabled = false
+                data.userDate.isHidden = true
+            }
+            if let gender = userTabelDetail.cellForRow(at: indexPath) as? GenderUserCell {
+                user?.gender = gender.labelGender.text
+                gender.userGender.isUserInteractionEnabled = false
+                gender.userGender.isHidden = true
+            }
+        }
+    }
+
     func imagePickerDelegate() {
         imagePicker.delegate = self
     }

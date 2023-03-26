@@ -32,16 +32,17 @@ class AgeUserCell: UITableViewCell {
         return conteiner
     }()
 
-    private lazy var userDate: UIDatePicker = {
+    lazy var userDate: UIDatePicker = {
         let picker = UIDatePicker()
         picker.datePickerMode = .date
         picker.isUserInteractionEnabled = false
+        picker.isHidden = true
         picker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
     }()
 
-    private var labelData: UILabel = {
+        var labelData: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.tintColor = .black

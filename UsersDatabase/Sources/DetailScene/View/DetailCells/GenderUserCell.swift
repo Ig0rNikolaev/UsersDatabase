@@ -32,16 +32,17 @@ class GenderUserCell: UITableViewCell {
         return conteiner
     }()
 
-    private lazy var userGender: UIPickerView = {
+    lazy var userGender: UIPickerView = {
         let picker = UIPickerView()
         picker.delegate = self
         picker.dataSource = self
         picker.isUserInteractionEnabled = false
+        picker.isHidden = true
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
     }()
 
-    private var labelGender: UILabel = {
+        var labelGender: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.tintColor = .black
@@ -57,11 +58,6 @@ class GenderUserCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupHierarchy()
         setupLayout()
-    }
-
-    @objc private func genderChanged(_ sender: UIPickerView) {
-        let selectedGender = pickerView(userGender, titleForRow: userGender.selectedRow(inComponent: 0), forComponent: 0) ?? "None"
-        labelGender.text = selectedGender
     }
 
     required init?(coder: NSCoder) {

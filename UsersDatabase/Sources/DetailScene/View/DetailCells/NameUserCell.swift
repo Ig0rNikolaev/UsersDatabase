@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class NameUserCell: UITableViewCell {
-    
+
     static let identifier = "NameUserCell"
     
     // MARK: - UI Elements
@@ -32,7 +32,7 @@ class NameUserCell: UITableViewCell {
         return conteiner
     }()
     
-    private var labelName: UITextField = {
+        var labelName: UITextField = {
         let text = UITextField()
         text.textAlignment = .left
         text.tintColor = .black
@@ -87,9 +87,5 @@ class NameUserCell: UITableViewCell {
 
     public func configurationUser(user: User?) {
         labelName.text = user?.name
-    }
-
-    public func editeName(newName: String, user: User?) {
-        user?.name = newName
     }
 }

@@ -8,8 +8,8 @@
 import UIKit
 
 final class DetailView: UIViewController {
-    
-    var presenter: DetailPresenterProtocol?
+
+    var presenter: DetailPresenterOutputProtocol?
 
     // MARK: - UI Elements
     
@@ -51,6 +51,7 @@ final class DetailView: UIViewController {
         button.backgroundColor = .systemBlue
         button.addTarget(self, action: #selector(addPhoto), for: .touchUpInside)
         button.tintColor = .white
+        button.isUserInteractionEnabled = false
         button.setImage(UIImage(systemName: "camera.fill"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -87,16 +88,6 @@ final class DetailView: UIViewController {
     
     // MARK: - Setups
 
-    var isSaveEdit = false {
-        didSet {
-            if isSaveEdit {
-                self.edit()
-            } else {
-                    self.save()
-                }
-            }
-        }
-
     @objc func editSave() {
         isSaveEdit.toggle()
     }
@@ -105,52 +96,16 @@ final class DetailView: UIViewController {
         present(imagePicker, animated: true)
     }
 
-    func edit() {
-        editSaveButton.setTitle("Save", for: .normal)
-
-        for indexPath in userTabelDetail.indexPathsForVisibleRows ?? [] {
-            if let name = userTabelDetail.cellForRow(at: indexPath) as? NameUserCell {
-                name.labelName.isUserInteractionEnabled = true
-            }
-            if let data = userTabelDetail.cellForRow(at: indexPath) as? AgeUserCell {
-                data.userDate.isUserInteractionEnabled = true
-                data.userDate.isHidden = false
-            }
-            if let gender = userTabelDetail.cellForRow(at: indexPath) as? GenderUserCell {
-                gender.userGender.isUserInteractionEnabled = true
-                gender.userGender.isHidden = false
-
+    var isSaveEdit = false {
+        didSet {
+            if isSaveEdit {
+                presenter?.setupEdit(tabel: userTabelDetail)
+            } else {
+                presenter?.setupSave(tabel: userTabelDetail)
+                }
             }
         }
-        CoreDataManager.shared.saveContext()
-    }
 
-    func save() {
-        let user = presenter?.user
-        editSaveButton.setTitle("Edit", for: .normal)
-
-        for indexPath in userTabelDetail.indexPathsForVisibleRows ?? [] {
-            if let name = userTabelDetail.cellForRow(at: indexPath) as? NameUserCell {
-                user?.name = name.labelName.text
-                name.labelName.isUserInteractionEnabled = false
-            }
-            if let data = userTabelDetail.cellForRow(at: indexPath) as? AgeUserCell {
-                user?.data = data.labelData.text
-                data.userDate.isUserInteractionEnabled = false
-                data.userDate.isHidden = true
-            }
-            if let gender = userTabelDetail.cellForRow(at: indexPath) as? GenderUserCell {
-                user?.gender = gender.labelGender.text
-                gender.userGender.isUserInteractionEnabled = false
-                gender.userGender.isHidden = true
-            }
-        }
-    }
-
-    func imagePickerDelegate() {
-        imagePicker.delegate = self
-    }
-    
     private func setupHierarchy() {
         imageUserСonteiner.addSubview(imageUser)
         view.addSubview(imageUserСonteiner)
@@ -189,9 +144,23 @@ final class DetailView: UIViewController {
     }
 }
 
-extension DetailView: DetailViewProtocol {
+extension DetailView: DetailPresenterInputProtocol {
+
+    func titleButton(title: String?, userInteraction: Bool) {
+        editSaveButton.setTitle(title, for: .normal)
+        addPhotoButton.isUserInteractionEnabled = userInteraction
+    }
+
+    func title() {
+        editSaveButton.setTitle("Save", for: .normal)
+    }
+
     func setupView() {
         view.backgroundColor = .systemGray6
+    }
+
+    func imagePickerDelegate() {
+        imagePicker.delegate = self
     }
 }
 
@@ -199,27 +168,9 @@ extension DetailView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         3
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.row {
-        case 0:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: NameUserCell.identifier,
-                                                           for: indexPath) as? NameUserCell else { return UITableViewCell() }
-            cell.configurationUser(user: presenter?.user)
-            return cell
-        case 1:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: AgeUserCell.identifier,
-                                                           for: indexPath) as? AgeUserCell else { return UITableViewCell() }
-            cell.configurationUserAge(user: presenter?.user)
-            return cell
-        case 2:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: GenderUserCell.identifier,
-                                                           for: indexPath) as? GenderUserCell else { return UITableViewCell() }
-            cell.configurationUserGender(user: presenter?.user)
-            return cell
-        default:
-            return UITableViewCell()
-        }
+        presenter?.createCell(tableView, cellForRowAt: indexPath) ??  UITableViewCell()
     }
 }
 

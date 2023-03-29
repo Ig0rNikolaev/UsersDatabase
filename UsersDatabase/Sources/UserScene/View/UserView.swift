@@ -12,23 +12,24 @@ final class UserView: UIViewController {
 
     //MARK: - Outlets
 
-    var presenter: UserPresenterProtocol?
-    
+    var presenter: UserPresenterOutputProtocol?
+
     //: MARK: - UI Elements
 
-    private lazy var userNameText: UITextField = {
+    lazy var userNameText: UITextField = {
         let textField = UITextField()
         textField.layer.cornerRadius = 10
         textField.backgroundColor = .white
         textField.textAlignment = .center
-        textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder ?? "Print your name")
+        textField.returnKeyType = .send
+        textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder ?? "Ввести имя пользователя")
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
 
     private lazy var userButtonPress: UIButton = {
         let button = UIButton()
-        button.setTitle("Add user", for: .normal)
+        button.setTitle("Добавить", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         button.layer.cornerRadius = 10
         button.backgroundColor = .systemBlue
@@ -61,14 +62,14 @@ final class UserView: UIViewController {
     //: MARK: - Setups
 
     @objc func addUser() {
-        if addAlert() {
+        if ((presenter?.addAlert(userName: userNameText)) != nil) {
             userNameText.text = nil
-            CoreDataManager.shared.saveContext()
+            presenter?.addSaveContext()
         }
     }
 
     private func setupView() {
-        title = "USERS"
+        title = "КОНТАКТЫ"
         view.backgroundColor = .systemGray6
         navigationController?.navigationBar.prefersLargeTitles = true
     }
@@ -99,38 +100,17 @@ final class UserView: UIViewController {
     }
 }
 
-extension UserView: UserViewProtocol {
+extension UserView: UserPresenterInputProtocol {
     func addFetchedDelegate() {
         presenter?.fetchedResultController.delegate = self
     }
 
-    func addAlert() -> Bool {
-        if userNameText.text!.isEmpty {
-            let alert = UIAlertController(title: "Ошибка ввода", message: "Поле не заполнено", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel))
-            present(alert, animated: true)
-            return false
-        } else {
-            presenter?.user = User()
-        }
-        if presenter?.user == nil {
-            presenter?.user = User(context: CoreDataManager.shared.managedContext)
-        }
-        if let user = presenter?.user {
-            user.data = "dd.mm.yy"
-            user.name = userNameText.text
-            user.gender = "None"
-            CoreDataManager.shared.saveContext()
-        }
-        return true
+    func addController() {
+        presenter?.setupController()
     }
 
-    func addController() {
-        do {
-            try presenter?.fetchedResultController.performFetch()
-        } catch {
-            print(error)
-        }
+    func present(alert: UIAlertController, animated: Bool) {
+        present(alert, animated: animated)
     }
 }
 
@@ -150,8 +130,8 @@ extension UserView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             guard let user = presenter?.fetchedResultController.object(at: indexPath) as? User else { return }
-            CoreDataManager.shared.managedContext.delete(user)
-            CoreDataManager.shared.saveContext()
+            presenter?.addManagedContext().delete(user)
+            presenter?.addSaveContext()
         }
     }
 

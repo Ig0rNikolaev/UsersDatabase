@@ -5,7 +5,6 @@
 //  Created by Игорь Николаев on 23.03.2023.
 //
 
-import Foundation
 import UIKit
 
 class NameUserCell: UITableViewCell {

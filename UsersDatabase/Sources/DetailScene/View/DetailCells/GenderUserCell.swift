@@ -5,7 +5,6 @@
 //  Created by Игорь Николаев on 23.03.2023.
 //
 
-import Foundation
 import UIKit
 
 class GenderUserCell: UITableViewCell {
@@ -123,11 +122,11 @@ extension GenderUserCell: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch row {
         case 0:
-            return "Male"
+            return "Не задано"
         case 1:
-            return "Female"
+            return "Жен."
         default:
-            return "None"
+            return "Муж."
         }
     }
 }

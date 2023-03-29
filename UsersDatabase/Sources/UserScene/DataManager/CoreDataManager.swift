@@ -5,7 +5,6 @@
 //  Created by Игорь Николаев on 22.03.2023.
 //
 
-import Foundation
 import CoreData
 
  final class CoreDataManager {

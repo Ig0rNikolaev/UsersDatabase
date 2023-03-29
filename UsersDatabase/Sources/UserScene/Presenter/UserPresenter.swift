@@ -18,14 +18,9 @@ protocol UserPresenterOutputProtocol {
     func addManagedContext() -> NSManagedObjectContext
     func addSaveContext()
     func setupController()
-    init(view: UserPresenterInputProtocol)
 }
 
 final class UserPresenter: UserPresenterOutputProtocol {
-    init(view: UserPresenterInputProtocol) {
-        self.view = view
-    }
-
     var view: UserPresenterInputProtocol?
     var fetchedResultController = CoreDataManager.shared.fetchedResultController(entity: "User", sortName: "name")
     var user: User?

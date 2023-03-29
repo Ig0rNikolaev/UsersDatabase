@@ -9,13 +9,13 @@ import UIKit
 import CoreData
 
 final class UserView: UIViewController {
-
+    
     //MARK: - Outlets
-
+    
     var presenter: UserPresenterOutputProtocol?
-
+    
     //: MARK: - UI Elements
-
+    
     lazy var userNameText: UITextField = {
         let textField = UITextField()
         textField.layer.cornerRadius = 10
@@ -26,7 +26,7 @@ final class UserView: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
-
+    
     private lazy var userButtonPress: UIButton = {
         let button = UIButton()
         button.setTitle("Добавить", for: .normal)
@@ -37,7 +37,7 @@ final class UserView: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
+    
     private lazy var userTable: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.dataSource = self
@@ -47,9 +47,9 @@ final class UserView: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-
+    
     //: MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -58,40 +58,40 @@ final class UserView: UIViewController {
         addController()
         addFetchedDelegate()
     }
-
+    
     //: MARK: - Setups
-
+    
     @objc func addUser() {
         if ((presenter?.addAlert(userName: userNameText)) != nil) {
             userNameText.text = nil
             presenter?.addSaveContext()
         }
     }
-
+    
     private func setupView() {
         title = "КОНТАКТЫ"
         view.backgroundColor = .systemGray6
         navigationController?.navigationBar.prefersLargeTitles = true
     }
-
+    
     private func setupHierarchy() {
         view.addSubview(userNameText)
         view.addSubview(userButtonPress)
         view.addSubview(userTable)
     }
-
+    
     private func setupLayout() {
         NSLayoutConstraint.activate([
             userNameText.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
             userNameText.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
             userNameText.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
             userNameText.bottomAnchor.constraint(equalTo: userNameText.topAnchor, constant: 45),
-
+            
             userButtonPress.topAnchor.constraint(equalTo: userNameText.bottomAnchor, constant: 10),
             userButtonPress.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
             userButtonPress.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
             userButtonPress.bottomAnchor.constraint(equalTo: userButtonPress.topAnchor, constant: 45),
-
+            
             userTable.topAnchor.constraint(equalTo: userButtonPress.bottomAnchor, constant: 10),
             userTable.leftAnchor.constraint(equalTo: view.leftAnchor),
             userTable.rightAnchor.constraint(equalTo: view.rightAnchor),
@@ -104,11 +104,11 @@ extension UserView: UserPresenterInputProtocol {
     func addFetchedDelegate() {
         presenter?.fetchedResultController.delegate = self
     }
-
+    
     func addController() {
         presenter?.setupController()
     }
-
+    
     func present(alert: UIAlertController, animated: Bool) {
         present(alert, animated: animated)
     }
@@ -134,11 +134,11 @@ extension UserView: UITableViewDataSource {
             presenter?.addSaveContext()
         }
     }
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         presenter?.fetchedResultController.sections?.count ?? 0
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let sections = presenter?.fetchedResultController.sections {
             return sections[section].numberOfObjects
@@ -146,7 +146,7 @@ extension UserView: UITableViewDataSource {
             return 0
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let user = presenter?.fetchedResultController.object(at: indexPath) as? User
@@ -161,7 +161,7 @@ extension UserView: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         userTable.beginUpdates()
     }
-
+    
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                     didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
@@ -190,7 +190,7 @@ extension UserView: NSFetchedResultsControllerDelegate {
             break
         }
     }
-
+    
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         userTable.endUpdates()
     }

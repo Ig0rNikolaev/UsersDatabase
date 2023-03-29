@@ -176,8 +176,8 @@
 		DBE1539E29C777B2005CE200 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				DB401AE229CB80E400C4F3E0 /* DetailScene */,
 				DBC792BD29C8608A00C3FFFE /* UserScene */,
+				DB401AE229CB80E400C4F3E0 /* DetailScene */,
 				DB572E6929CB514F00C2AF71 /* DataManager */,
 				DB9C655E29C8D5C200845814 /* Builders */,
 				DBE1539F29C777BF005CE200 /* App */,

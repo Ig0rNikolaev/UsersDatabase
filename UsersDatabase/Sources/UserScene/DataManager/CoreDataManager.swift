@@ -7,7 +7,7 @@
 
 import CoreData
 
- final class CoreDataManager {
+final class CoreDataManager {
 
     //MARK: - Outlets
 
@@ -28,7 +28,7 @@ import CoreData
     //: MARK: - Init
 
     private init() {}
-
+    
     //: MARK: - Setups
 
     func entityForName(userName: String) -> NSEntityDescription {

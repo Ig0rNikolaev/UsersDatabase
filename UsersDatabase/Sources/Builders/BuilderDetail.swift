@@ -10,8 +10,10 @@ import UIKit
 final class BuilderDetail {
     static func build(user: User?) -> UIViewController {
         let view = DetailView()
-        let presenter = UserDetailPresenter(user: user, view: view)
+        let presenter = UserDetailPresenter(user: user)
         view.presenter = presenter
+        presenter.view = view
+        presenter.user = user
         return view
     }
 }

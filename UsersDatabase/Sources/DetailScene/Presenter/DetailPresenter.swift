@@ -16,15 +16,14 @@ protocol DetailPresenterOutputProtocol {
     func setupSave(tabel: UITableView)
     func setupEdit(tabel: UITableView)
     func createCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    init(user: User?, view: DetailPresenterInputProtocol?)
+    init(user: User?)
 }
 
 final class UserDetailPresenter: DetailPresenterOutputProtocol {
     var view: DetailPresenterInputProtocol?
     var user: User?
-    required init(user: User?, view: DetailPresenterInputProtocol?) {
+    required init(user: User?) {
         self.user = user
-        self.view = view
     }
 
     func createCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

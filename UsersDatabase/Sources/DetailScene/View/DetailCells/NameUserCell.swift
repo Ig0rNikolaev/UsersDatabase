@@ -31,7 +31,7 @@ class NameUserCell: UITableViewCell {
         return conteiner
     }()
     
-        var labelName: UITextField = {
+    var labelName: UITextField = {
         let text = UITextField()
         text.textAlignment = .left
         text.tintColor = .black

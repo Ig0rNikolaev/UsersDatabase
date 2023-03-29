@@ -10,8 +10,9 @@ import UIKit
 final class BuilderUser {
     static func build() -> UIViewController {
         let view = UserView()
-        let presenter = UserPresenter(view: view)
+        let presenter = UserPresenter()
         view.presenter = presenter
+        presenter.view = view
         return view
     }
 }

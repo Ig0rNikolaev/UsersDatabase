@@ -8,9 +8,9 @@
 import UIKit
 
 final class DetailView: UIViewController {
-
+    
     var presenter: DetailPresenterOutputProtocol?
-
+    
     // MARK: - UI Elements
     
     private lazy var userTabelDetail: UITableView = {
@@ -63,7 +63,7 @@ final class DetailView: UIViewController {
         picker.allowsEditing = true
         return picker
     }()
-
+    
     private lazy var editSaveButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 5
@@ -75,7 +75,7 @@ final class DetailView: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -87,25 +87,25 @@ final class DetailView: UIViewController {
     }
     
     // MARK: - Setups
-
+    
     @objc func editSave() {
         isSaveEdit.toggle()
     }
-
+    
     @objc func addPhoto() {
         present(imagePicker, animated: true)
     }
-
+    
     var isSaveEdit = false {
         didSet {
             if isSaveEdit {
                 presenter?.setupEdit(tabel: userTabelDetail)
             } else {
                 presenter?.setupSave(tabel: userTabelDetail)
-                }
             }
         }
-
+    }
+    
     private func setupHierarchy() {
         imageUserСonteiner.addSubview(imageUser)
         view.addSubview(imageUserСonteiner)
@@ -135,7 +135,7 @@ final class DetailView: UIViewController {
             addPhotoButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -110),
             addPhotoButton.widthAnchor.constraint(equalToConstant: 50),
             addPhotoButton.heightAnchor.constraint(equalToConstant: 50),
-
+            
             editSaveButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
             editSaveButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
             editSaveButton.widthAnchor.constraint(equalToConstant: 70),
@@ -145,20 +145,20 @@ final class DetailView: UIViewController {
 }
 
 extension DetailView: DetailPresenterInputProtocol {
-
+    
     func titleButton(title: String?, userInteraction: Bool) {
         editSaveButton.setTitle(title, for: .normal)
         addPhotoButton.isUserInteractionEnabled = userInteraction
     }
-
+    
     func title() {
         editSaveButton.setTitle("Save", for: .normal)
     }
-
+    
     func setupView() {
         view.backgroundColor = .systemGray6
     }
-
+    
     func imagePickerDelegate() {
         imagePicker.delegate = self
     }
